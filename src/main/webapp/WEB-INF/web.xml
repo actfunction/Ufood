@@ -5,10 +5,33 @@
 	<!-- 如果是用mvn命令生成的xml，需要修改版本为3.1 -->
 	<display-name>Archetype Created Web Application</display-name>
 
+	<!-- 配置spring监听 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<context-param>
+	   <param-name>contextConfigLocation</param-name>
+	   <param-value>classpath:spring/spring-scan.xml</param-value>
+	</context-param>
+	
+	<servlet>
+		<servlet-name>dispacherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/spring-scan.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>dispacherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 	</welcome-file-list>
-
 </web-app>
