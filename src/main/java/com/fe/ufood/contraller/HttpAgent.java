@@ -16,6 +16,7 @@ import com.fe.ufood.bean.MessageBean;
 import com.fe.ufood.mgr.AgentHelper;
 import com.fe.ufood.util.Bean;
 import com.fe.ufood.util.Constant;
+import com.fe.ufood.util.JsonUtils;
 import com.fe.ufood.util.RequestUtils;
 
 @RestController
@@ -55,22 +56,19 @@ public class HttpAgent {
 //		Map<String,Object> serviceParameter = (Map<String, Object>) requestParamter.get(SERVICE_PARAMETER);
 		try {
 			StringBuffer buffer = new StringBuffer("agent is error,exception is").append("serviceName is ")
-					.append(serviceName).append("action is ").append(action).append("serviceParameter is")
-					.append(param);
+					.append(serviceName).append("action is ").append(action).append("serviceParameter is");
 			result.setMessage(buffer.toString());
 			// 调用路由
 //			result = ClientTools.callService(serviceName, action, serviceParameter);
 		} catch (Exception e) {
 			StringBuffer buffer = new StringBuffer("agent is error,exception is").append("serviceName is ")
-					.append(serviceName).append("action is ").append(action).append("serviceParameter is")
-					.append(param);
+					.append(serviceName).append("action is ").append(action).append("serviceParameter is");
 			result.setError(e.getMessage());
 			result.setMessage(buffer.toString());
 			//此处是否需要打印日志
 			e.printStackTrace();
 		}
 
-		String rtnStr = "{'name': 'zhangsan', 'age': 23}";
 		
 		// =================处理返回信息===================
         if (!response.isCommitted()) {
@@ -89,14 +87,15 @@ public class HttpAgent {
             }
             response.setContentType(header);
             PrintWriter out = null;
+            String content = JsonUtils.toJson(param, true); //支持压缩空值输出
 			try {
 				out = response.getWriter();
+	            out.write(content);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	
-            out.print(rtnStr);
             out.flush();
             out.close();
         }
