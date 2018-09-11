@@ -3,10 +3,11 @@ function btnClick() {
 //	var param = {"a":1, "b":2, "c":3};
 	var data = $("#setDataIpt").val();
 	try {
+		debugger;
 		data = jQuery.parseJSON(data);
 	} catch (e) {
-		return false;
 		alert("格式不对，出错啦！！！");
+		return false;
 	} 
 	FireFly.doAct("httpAgent", "agent", data, setData, true);
 }

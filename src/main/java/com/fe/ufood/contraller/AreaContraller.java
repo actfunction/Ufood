@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AreaContraller {
 	
 	@Autowired
-	private HttpAgent httpAgent;
+//	private HttpAgent httpAgent;
 	
 	@ResponseBody
 	@RequestMapping(value="list")

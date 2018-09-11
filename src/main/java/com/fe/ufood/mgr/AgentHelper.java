@@ -3,13 +3,11 @@ package com.fe.ufood.mgr;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fe.ufood.util.Bean;
-import com.fe.ufood.util.Lang;
 
 
 /**
@@ -28,9 +26,6 @@ public class AgentHelper {
 	 */
 	private final static String SERVICE_ACTION = "action";
 
-    private static final String PARAM_SERV_ID = "servId";
-    
-    private static final String PARAM_DATA_ID = "dataId";
     
     private static final String PARAM_PAGE = "page";
     
