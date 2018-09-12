@@ -19,7 +19,12 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
+	<!-- 配置日志监听 -->
+	<listener>
+		<listener-class>com.fe.ufood.listener.LogLoaderListener</listener-class>
+	</listener>
+
 	<context-param>
 	   <param-name>contextConfigLocation</param-name>
 	   <param-value>classpath:spring/spring-scan.xml</param-value>
