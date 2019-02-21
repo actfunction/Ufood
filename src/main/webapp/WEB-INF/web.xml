@@ -5,6 +5,26 @@
 	<!-- 如果是用mvn命令生成的xml，需要修改版本为3.1 -->
 	<display-name>Archetype Created Web Application</display-name>
 	
+	<context-param>
+		<param-name>jndi_prefix</param-name>
+		<param-value>java:comp/env</param-value>
+	</context-param>
+	<context-param>
+		<param-name>datasource_prefix</param-name>
+		<param-value>jdbc</param-value>
+	</context-param>
+	<resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/rhoa</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<context-param>
+		<param-name>listener</param-name>
+		<param-value>com.rh.core.base.start.LogMgr,com.rh.core.base.start.DsMgr,com.rh.core.base.start.CacheLoader,com.rh.core.base.start.UpgradeMgr,com.rh.core.base.start.ScheduleLoader,com.rh.core.base.start.MsgLisLoader,com.rh.core.base.start.ServLisLoader
+		</param-value>
+	</context-param>
+	
 	<!-- 这两段代码，写在引入springMVC代码前 -->
 	<servlet-mapping>
 	    <servlet-name>default</servlet-name>
@@ -22,7 +42,7 @@
 
 	<!-- 配置日志监听 -->
 	<listener>
-		<listener-class>com.fe.ufood.listener.LogLoaderListener</listener-class>
+		<listener-class>com.rh.core.base.ContextListener</listener-class>
 	</listener>
 
 	<context-param>
