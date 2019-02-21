@@ -27,7 +27,7 @@
 
 	<context-param>
 	   <param-name>contextConfigLocation</param-name>
-	   <param-value>classpath:spring/spring-scan.xml</param-value>
+	   <param-value>classpath:spring/applicationContext*.xml</param-value>
 	</context-param>
 	
 	<servlet>
@@ -35,7 +35,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:spring/spring-scan.xml</param-value>
+			<param-value>classpath:spring/applicationContext*.xml</param-value>
 		</init-param>
 	</servlet>
 	

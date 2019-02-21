@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"
+	monitoring="autodetect" dynamicConfig="false">
+	<!--start count -->
+	<defaultCache maxElementsInMemory="100000" eternal="true"
+		overflowToDisk="false" diskSpoolBufferSizeMB="30" maxElementsOnDisk="10000000"
+		diskPersistent="false" statistics="true"
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU">
+		<terracotta clustered="false" />
+		<!-- <cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicateAsynchronously=false, replicatePuts=false, replicateUpdates=false,
+	replicateUpdatesViaCopy=false, replicateRemovals=true " /> -->
+	</defaultCache>
+
+	<!-- 单独设置菜单的缓存，单个菜单文件100KB，避免上万登录用户全部缓存，一般设定为并发用户数1000-2000 -->
+	<cache name="SY_ORG_USER__MENU" maxElementsInMemory="1000"
+		eternal="true" overflowToDisk="false" statistics="true"
+		memoryStoreEvictionPolicy="LRU" />
+
+	<!-- 单独设置页面缓存，缓存时间5分钟一刷新 -->
+	<cache name="SimplePageCachingFilter" maxElementsInMemory="2000"
+		eternal="false" overflowToDisk="false" timeToIdleSeconds="300"
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LFU" />
+
+	<!--在线用户 -->
+	<!-- cache name="ONLINE_USER" maxElementsInMemory="50000" eternal="true"
+		overflowToDisk="false" statistics="true" memoryStoreEvictionPolicy="LFU">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
+			properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true, 
+			replicateUpdatesViaCopy=true, replicateRemovals=true "/>
+	</cache -->
+
+	<!-- 集群环境 RMI同步设置 -->
+<!-- 	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,	multicastGroupPort=4446, timeToLive=1" />
+
+	<cacheManagerPeerListenerFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory" /> -->
+</ehcache>

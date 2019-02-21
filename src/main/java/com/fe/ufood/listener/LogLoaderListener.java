@@ -6,7 +6,6 @@ import org.apache.log4j.PropertyConfigurator;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.validation.Validation;
 
 /**
  * 日志系统初始化监听器

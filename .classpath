@@ -32,11 +32,19 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/agent-wrapper-1.2.17.1103.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/http-agent-1.1.17.628.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/kettle-core-7.1.0.0-12.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/kettle-dbdialog-7.1.0.0-12.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/kettle-engine-7.1.0.0-12.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/kettle-ui-swt-7.1.0.0-12.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/kettle5-log4j-plugin-7.1.0.0-12.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/oscarJDBC.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/packet-wrapper-1.6.18.0105.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/rh-util.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/rhmq-1.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/todo-center-client-1.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/TongJMS.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+    <!-- 开启包扫描 -->
+    <context:component-scan base-package="com.rh.*"></context:component-scan>
+
+    <!-- 引入外部配置文件 -->
+    <!-- <util:properties id="cfg" location="classpath:properties/configs.properties"></util:properties> -->
+    <!-- 	<context:property-placeholder location="classpath:/properties/configs.properties"/> -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/properties/configs.properties</value>
+                <!--REDIS配置-->
+                <!--<value>classpath:/properties/redis.properties</value>-->
+            </list>
+        </property>
+    </bean>
+    
+    <!-- 配置jndi数据源 -->
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+   		<property name="jndiName"><value>java:comp/env/jdbc/rhoa</value></property>
+ 	</bean>
+
+    <!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbcdriver}"></property>
+        <property name="url" value="${jdbcurl}"></property>
+        <property name="password" value="${jdbcpassword}"></property>
+        <property name="username" value="${jdbcusername}"></property>
+    </bean> -->
+    
+    <!-- 开启spring的ehcache缓存注解   -->
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">  
+        <property name="configLocation" value="classpath:ehcache.xml"></property>  
+    </bean>  
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">  
+        <property name="cacheManager" ref="ehcache"></property>  
+    </bean>  
+	<cache:annotation-driven cache-manager="cacheManager" />
+
+    <!-- AOP实现事务控制 -->
+    <!-- 开启事务注解 -->
+    <tx:annotation-driven/>
+
+    <!-- 配置声明式事务处理 -->
+    <!-- 1.配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- 2.配置事务通知 定义事务策略
+            propagation="REQUIRED" 事务的传播属性，表示当前操作必须添加事务
+            propagation="SUPPORTS" 表示事务支持的
+
+            2.1 spring中默认的事务策略：
+                    规则：如果spring遇到运行时异常：则默认回滚事务
+                          如果spring中遇到检测异常/编译异常，Sql异常/IO异常/自定义异常 throw 事务默认不回滚
+                rollback-for/no-rollback-for：指定异常 回滚/不回滚 事务
+                总结：
+                    如果程序中需要处理异常，则需要考虑事务回滚等特性，一般将检测异常转化为运行时异常：throw new RunTimeException(e)
+
+             -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- 3.配置事务切面
+            3.1 within表达式  粗粒度的事务控制
+                语法：within（包名.类名）
+            3.2 execution表达式（最受欢迎）  细粒度
+                语法：execution(返回值类型 包名.类名.方法名（参数列表）)
+                例子：
+                    execution(* com.jt.manage.service.*.*(..))
+     -->
+    <aop:config>
+        <aop:pointcut expression="execution(* com.rh.*.*(..))" id="pc"/>
+        <!-- 配置通知 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pc"/>
+    </aop:config>
+
+
+</beans>

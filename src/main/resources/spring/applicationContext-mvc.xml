@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 开启MVC注解 -->
+	<mvc:annotation-driven />
+
+	<!-- 放行静态资源css js html...... -->
+	<mvc:default-servlet-handler />
+
+	<!-- xml形式的拦截器 -->
+	<!-- <mvc:interceptors></mvc:interceptors> -->
+
+	<!-- 添加映射和资源文件 -->
+<!-- 	<mvc:resources location="" mapping="" /> -->
+
+	<!-- 添加视图解析 内部资源视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	 </bean>
+	 
+	 <!-- 配置文件上传视图解析器
+	 	  要求：id必须为multipartResolver
+	  -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<!-- 设定最大上传量：10*1024*1024 -->
+		<property name="maxUploadSize" value="10485760"></property>
+	</bean>
+</beans>
