@@ -18,9 +18,9 @@ public class CacheLoader {
 	 * 初始化缓存服务
 	 */
 	public void start() {
-        CacheMgr.getInstance();
-        Resource.getServMap();
-        Resource.getDictMap();
+//        CacheMgr.getInstance();
+//        Resource.getServMap();
+//        Resource.getDictMap();
         System.out.println("Cache is OK!.........................");
 	}
 	

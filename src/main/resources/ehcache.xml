@@ -16,6 +16,11 @@
 	</defaultCache>
 
 	<!-- 单独设置菜单的缓存，单个菜单文件100KB，避免上万登录用户全部缓存，一般设定为并发用户数1000-2000 -->
+	<cache name="cacheTest" maxElementsInMemory="1000"
+		eternal="true" overflowToDisk="false" statistics="true"
+		memoryStoreEvictionPolicy="LRU" />
+
+	<!-- 单独设置菜单的缓存，单个菜单文件100KB，避免上万登录用户全部缓存，一般设定为并发用户数1000-2000 -->
 	<cache name="SY_ORG_USER__MENU" maxElementsInMemory="1000"
 		eternal="true" overflowToDisk="false" statistics="true"
 		memoryStoreEvictionPolicy="LRU" />
